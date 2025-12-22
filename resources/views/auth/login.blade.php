@@ -41,7 +41,6 @@
             overflow: hidden;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            border: none;
         }
 
         .form-wrap {
