@@ -25,11 +25,18 @@
 </head>
 
 @php
+    $storage = \Illuminate\Support\Facades\Storage::disk('public');
+    $fallbackImage = asset('image/hero.png');
     $galleryImages = collect([$primaryImage])
         ->merge($detailImages ?? [])
         ->filter()
-        ->map(fn($img) => asset('storage/' . $img))
+        ->map(fn($img) => $storage->exists($img) ? asset('storage/' . $img) : null)
+        ->filter()
         ->values();
+
+    if ($galleryImages->isEmpty()) {
+        $galleryImages = collect([$fallbackImage]);
+    }
 
     $statusClass = ['tersedia' => 'is-available', 'tidak tersedia' => 'is-limited'][$status] ?? 'is-booked';
     $isAvailable = $status === 'tersedia';

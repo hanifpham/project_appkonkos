@@ -30,14 +30,19 @@
                 </thead>
                 <tbody>
                     @forelse ($data as $index => $k)
+                        @php
+                            $kosanImage = $k->gambar_kosan
+                                && \Illuminate\Support\Facades\Storage::disk('public')->exists($k->gambar_kosan)
+                                ? asset('storage/' . $k->gambar_kosan)
+                                : asset('image/hero.png');
+                        @endphp
                         <tr>
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ $k->nama_kosan }}</td>
                             <td>{{ $k->alamat }}</td>
                             <td>Rp {{ number_format($k->harga_bulan, 0, ',', '.') }}</td>
                             <td class="text-center">
-                                <img src="{{ asset('storage/' . $k->gambar_kosan) }}" alt="Gambar kosan" width="60"
-                                    class="rounded shadow-sm">
+                                <img src="{{ $kosanImage }}" alt="Gambar kosan" width="60" class="rounded shadow-sm">
                             </td>
                             <td>{{ \Illuminate\Support\Str::limit($k->fasilitas_kosan, 30) }}</td>
                             <td>{{ $k->kontak_kosan }}</td>

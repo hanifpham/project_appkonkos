@@ -57,9 +57,17 @@
             {{-- Gambar kontrakan Utama --}}
             <div class="mb-3">
                 <label class="form-label fw-semibold ">Gambar kontrakan Utama</label>
+                @php
+                    $storage = \Illuminate\Support\Facades\Storage::disk('public');
+                @endphp
                 @if ($kontrakan->gambar_kontrakan)
+                    @php
+                        $previewImage = $storage->exists($kontrakan->gambar_kontrakan)
+                            ? asset('storage/' . $kontrakan->gambar_kontrakan)
+                            : asset('image/hero.png');
+                    @endphp
                     <div class="mb-2">
-                        <img src="{{ asset('storage/' . $kontrakan->gambar_kontrakan) }}" width="150" class="rounded shadow-sm border" alt="Gambar Utama">
+                        <img src="{{ $previewImage }}" width="150" class="rounded shadow-sm border" alt="Gambar Utama">
                     </div>
                 @endif
                 <input type="file" name="gambar_kontrakan" class="form-control" accept="image/*">
@@ -72,12 +80,16 @@
             {{-- Detail kontrakan --}}
             <div class="mb-3">
                 <label class="form-label fw-semibold ">Detail kontrakan</label>
-                @php $detailImages = json_decode($kontrakan->detail_kontrakan, true) ?? []; @endphp
+                @php
+                    $detailImages = collect(json_decode($kontrakan->detail_kontrakan, true) ?? [])
+                        ->filter()
+                        ->filter(fn($img) => $storage->exists($img))
+                        ->map(fn($img) => asset('storage/' . $img))
+                        ->values();
+                @endphp
                 <div class="d-flex flex-wrap mb-2 p-2 border rounded bg-light">
                     @forelse ($detailImages as $img)
-                        @if ($img)
-                            <img src="{{ asset('storage/' . $img) }}" width="100" height="80" class="rounded me-2 mb-2 shadow-sm" style="object-fit: cover;">
-                        @endif
+                        <img src="{{ $img }}" width="100" height="80" class="rounded me-2 mb-2 shadow-sm" style="object-fit: cover;">
                     @empty
                         <small class="text-muted fst-italic">Belum ada gambar detail.</small>
                     @endforelse

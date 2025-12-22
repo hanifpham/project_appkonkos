@@ -109,6 +109,7 @@
                             @forelse ($kosans as $index => $item)
                                 @php
                                     $image = $item->gambar_kosan
+                                        && \Illuminate\Support\Facades\Storage::disk('public')->exists($item->gambar_kosan)
                                         ? asset('storage/' . $item->gambar_kosan)
                                         : 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80';
                                     $detailUrl = route('kosan.detail', $item);
@@ -155,6 +156,7 @@
                             @forelse ($kontrakans as $index => $item)
                                 @php
                                     $image = $item->gambar_kontrakan
+                                        && \Illuminate\Support\Facades\Storage::disk('public')->exists($item->gambar_kontrakan)
                                         ? asset('storage/' . $item->gambar_kontrakan)
                                         : 'https://images.unsplash.com/photo-1434434319959-1f886517e1fe?auto=format&fit=crop&w=900&q=80';
                                     $detailUrl = route('kontrakan.detail', $item);

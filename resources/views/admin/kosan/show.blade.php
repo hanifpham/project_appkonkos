@@ -10,9 +10,15 @@
         <h4 class="fw-bold  mb-4 text-center text-primary">{{ $data->nama_kosan }}</h4>
 
         {{-- Gambar Utama --}}
+        @php
+            $storage = \Illuminate\Support\Facades\Storage::disk('public');
+            $mainImage = $data->gambar_kosan && $storage->exists($data->gambar_kosan)
+                ? asset('storage/' . $data->gambar_kosan)
+                : asset('image/hero.png');
+        @endphp
         <div class="text-center mb-4">
-            <img src="{{ asset('storage/' . $data->gambar_kosan) }}" alt="Gambar Kosan" class="img-fluid rounded shadow-sm"
-                 style="max-height: 300px; object-fit: cover; width: 100%;">
+            <img src="{{ $mainImage }}" alt="Gambar Kosan" class="img-fluid rounded shadow-sm"
+                style="max-height: 300px; object-fit: cover; width: 100%;">
         </div>
 
         {{-- Harga --}}
@@ -25,12 +31,20 @@
         {{-- Detail Gambar Kosan --}}
         <div class="mb-4">
             <h6 class="fw-bold  mb-3">Detail Gambar Kosan</h6>
-            @php $detailImages = json_decode($data->detail_kosan, true) ?? []; @endphp
+            @php
+                $detailImages = collect(json_decode($data->detail_kosan, true) ?? [])
+                    ->filter()
+                    ->filter(fn($img) => $storage->exists($img))
+                    ->map(fn($img) => asset('storage/' . $img))
+                    ->values();
+            @endphp
             <div class="d-flex flex-wrap">
-                @foreach ($detailImages as $img)
-                    <img src="{{ asset('storage/' . $img) }}" class="rounded shadow-sm me-3 mb-3"
-                         style="width:160px; height:120px; object-fit:cover;">
-                @endforeach
+                @forelse ($detailImages as $img)
+                    <img src="{{ $img }}" class="rounded shadow-sm me-3 mb-3"
+                        style="width:160px; height:120px; object-fit:cover;" alt="Detail kosan">
+                @empty
+                    <p class="text-muted small mb-0">Belum ada gambar detail.</p>
+                @endforelse
             </div>
         </div>
 

@@ -20,6 +20,10 @@
     $location = $listing->alamat;
     $status = $listing->status;
     $statusClass = ['tersedia' => 'is-available', 'tidak tersedia' => 'is-limited'][$status] ?? 'is-booked';
+    $imagePath = $listing->gambar_kosan ?? $listing->gambar_kontrakan;
+    $imageUrl = $imagePath && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath)
+        ? asset('storage/' . $imagePath)
+        : asset('image/hero.png');
 @endphp
 
 <body>
@@ -33,8 +37,7 @@
                     <div class="d-flex flex-column gap-4">
                         <article class="detail-card" data-aos="fade-down">
                             <div class="booking-cover mb-4">
-                                <img src="{{ asset('storage/' . ($listing->gambar_kosan ?? $listing->gambar_kontrakan)) }}"
-                                    class="w-100 h-100" alt="{{ $title }}">
+                                <img src="{{ $imageUrl }}" class="w-100 h-100" alt="{{ $title }}">
                             </div>
                             <h2 class="mb-1">{{ $title }}</h2>
                             <p class="detail-location mb-2"><i class="bi bi-geo-alt"></i> {{ $location }}</p>

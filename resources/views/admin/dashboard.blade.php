@@ -69,13 +69,19 @@
                     </thead>
                     <tbody>
                         @forelse ($dataKosan as $k)
+                            @php
+                                $kosanImage = $k->gambar_kosan
+                                    && \Illuminate\Support\Facades\Storage::disk('public')->exists($k->gambar_kosan)
+                                    ? asset('storage/' . $k->gambar_kosan)
+                                    : asset('image/hero.png');
+                            @endphp
                             <tr>
                                 <td>{{ $k->id }}</td>
                                 <td>{{ $k->nama_kosan }}</td>
                                 <td>{{ $k->alamat }}</td>
                                 <td>Rp {{ number_format($k->harga_bulan, 0, ',', '.') }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $k->gambar_kosan) }}" width="60" class="rounded">
+                                    <img src="{{ $kosanImage }}" width="60" class="rounded" alt="Gambar kosan">
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit($k->fasilitas_kosan, 60) }}</td>
                                 <td>{{ $k->kontak_kosan }}</td>
@@ -113,13 +119,19 @@
                     </thead>
                     <tbody>
                         @forelse ($dataKontrakan as $k)
+                            @php
+                                $kontrakanImage = $k->gambar_kontrakan
+                                    && \Illuminate\Support\Facades\Storage::disk('public')->exists($k->gambar_kontrakan)
+                                    ? asset('storage/' . $k->gambar_kontrakan)
+                                    : asset('image/hero.png');
+                            @endphp
                             <tr>
                                 <td>{{ $k->id }}</td>
                                 <td>{{ $k->nama_kontrakan }}</td>
                                 <td>{{ $k->alamat }}</td>
                                 <td>Rp {{ number_format($k->harga_tahun, 0, ',', '.') }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $k->gambar_kontrakan) }}" width="60" class="rounded">
+                                    <img src="{{ $kontrakanImage }}" width="60" class="rounded" alt="Gambar kontrakan">
                                 </td>
                                 <td>{{ \Illuminate\Support\Str::limit($k->fasilitas_kontrakan, 60) }}</td>
                                 <td>{{ $k->kontak_kontrakan }}</td>
