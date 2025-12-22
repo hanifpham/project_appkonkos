@@ -33,7 +33,11 @@
         <main class="detail-main">
             <section class="section detail-section">
                 <div class="container">
-
+                    <a href="{{ $type === 'kosan' ? route('kosan.detail', $listing) : route('kontrakan.detail', $listing) }}"
+                        class="text-decoration-none d-inline-flex align-items-center m-4 text-dark">
+                        <i class="bi bi-arrow-left"></i>
+                        <span class="ms-2 fw-semibold">Kembali</span>
+                    </a>
                     <div class="d-flex flex-column gap-4">
                         <article class="detail-card" data-aos="fade-down">
                             <div class="booking-cover mb-4">
