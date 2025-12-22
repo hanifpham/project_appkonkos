@@ -1154,9 +1154,6 @@ body.profile-page {
     object-fit: cover;
 }
 
-.booking-main {
-    padding-top: 1.5rem;
-}
 
 @media (max-width: 768px) {
     .profile-main {
