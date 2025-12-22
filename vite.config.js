@@ -10,10 +10,4 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    server: {
-        host: "0.0.0.0", // Izinkan akses dari semua IP
-        hmr: {
-            host: "10.157.145.14", // Ganti dengan IP Laptop Anda (Cek pakai ipconfig)
-        },
-    },
 });
