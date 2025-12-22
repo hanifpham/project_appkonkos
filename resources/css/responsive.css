@@ -352,6 +352,10 @@
         border-radius: 14px !important;
     }
 
+    .booking-main {
+        padding-top: 1rem !important;
+    }
+
     .detail-card h2 {
         font-size: 1.2rem !important;
     }

@@ -30,7 +30,7 @@
     <div class="page-wrapper detail-page">
         @include('user.home.partials.navbar')
 
-        <main class="detail-main">
+        <main class="detail-main booking-main">
             <section class="section detail-section">
                 <div class="container">
 
