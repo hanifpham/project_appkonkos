@@ -20,8 +20,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Paksa HTTPS jika aplikasi sudah online (Production)
-        if ($this->app->environment('production')) {
+        // Paksa HTTPS jika request/proxy memakai HTTPS atau APP_URL sudah HTTPS.
+        $appUrl = config('app.url');
+        $forwardedProto = request()->header('x-forwarded-proto');
+        $shouldForceHttps = false;
+
+        if (is_string($appUrl) && str_starts_with($appUrl, 'https://')) {
+            $shouldForceHttps = true;
+        }
+
+        if (is_string($forwardedProto) && str_contains($forwardedProto, 'https')) {
+            $shouldForceHttps = true;
+        }
+
+        if ($shouldForceHttps) {
             URL::forceScheme('https');
         }
     }
