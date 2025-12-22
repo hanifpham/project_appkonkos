@@ -142,11 +142,13 @@
             text-align: center;
             padding: 130px 50px;
             color: white;
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
 
         .visual::after {
             content: "";
             position: absolute;
+            border-radius: 50px 0 0 50px;
             inset: 0;
             background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.45) 100%);
         }
