@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary: #1967d2;
@@ -244,14 +245,14 @@
 
 <body>
     <div class="card">
-        <div class="visual" id="visual-panel">
+        <div class="visual" id="visual-panel" data-aos="fade-right" data-aos-delay="200">
             <div>
                 <h2>Selamat Datang Kembali!</h2>
                 <p>Silahkan masuk untuk mengakses layanan booking kosan dan kontrakan dengan mudah.</p>
             </div>
             <a class="ghost-btn" href="{{ route('login.form') }}" id="to-login">Masuk</a>
         </div>
-        <div class="form-wrap">
+        <div class="form-wrap" data-aos="fade-left" data-aos-delay="400">
             <h1>Daftar</h1>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
@@ -301,6 +302,12 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    if (window.AOS) {
+        AOS.init({ once: true, duration: 800 });
+    }
+</script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
