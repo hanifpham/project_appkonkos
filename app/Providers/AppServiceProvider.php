@@ -23,7 +23,12 @@ class AppServiceProvider extends ServiceProvider
         // Paksa HTTPS jika request/proxy memakai HTTPS atau APP_URL sudah HTTPS.
         $appUrl = config('app.url');
         $forwardedProto = request()->header('x-forwarded-proto');
+        $forceHttpsEnv = filter_var(env('FORCE_HTTPS', false), FILTER_VALIDATE_BOOLEAN);
         $shouldForceHttps = false;
+
+        if ($forceHttpsEnv || $this->app->environment('production')) {
+            $shouldForceHttps = true;
+        }
 
         if (is_string($appUrl) && str_starts_with($appUrl, 'https://')) {
             $shouldForceHttps = true;
