@@ -135,7 +135,7 @@
             position: relative;
             background: url('{{ asset('image/hero.png') }}') center/cover no-repeat;
             min-height: 520px;
-            border-radius: 0;
+            border-radius: 50px 0 0 50px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
