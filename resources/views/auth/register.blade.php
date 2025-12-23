@@ -292,11 +292,11 @@
                         alt="Google" width="18" height="18">
                     Google
                 </button>
-                <button type="button" class="social-btn" id="facebook-auth-btn">
+                {{-- <button type="button" class="social-btn" id="facebook-auth-btn">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
                         alt="Facebook" width="18" height="18">
                     Facebook
-                </button>
+                </button> --}}
             </div>
         </div>
     </div>
